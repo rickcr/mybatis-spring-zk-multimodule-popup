@@ -1,0 +1,63 @@
+<zk>
+<window id="employeeForm" mode="modal"
+	sizable="true" closable="true"
+	height="320px" width="600px"
+	title="Employee" border="normal"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('net.learntechnology.empmaint.viewmodel.EmployeeFormVM')" >
+
+<vlayout style="padding:5px;"
+	 form="@id('emp')
+	@load(vm.employee)
+	@save(vm.employee, before='update'),
+	@save(vm.employee, before='add')">
+	<vlayout>
+		<grid>
+			<columns>
+				<column align="right" width="120px"/>
+				<column/>
+			</columns>
+			<rows>
+				<row visible="@load(vm.employee.id ne null)">
+					<cell sclass="row-title">ID:</cell>
+					<cell><textbox disabled="true" value="@bind(emp.id)" style="width:40px"/></cell>
+				</row>
+				<row>
+					<cell sclass="row-title">First Name:</cell>
+					<cell><textbox value="@bind(emp.firstName)" constraint="no empty" style="width:400px"/></cell>
+				</row>
+				<row>
+					<cell sclass="row-title">Last Name:</cell>
+					<cell><textbox value="@bind(emp.lastName)" constraint="no empty" style="width:400px"/></cell>
+				</row>
+				<row>
+					<cell sclass="row-title">Age:</cell>
+					<cell><textbox value="@bind(emp.age)" constraint="no empty" style="width:400px"/></cell>
+				</row>
+				<row>
+					<cell sclass="row-title">Department:</cell>
+					<cell>
+						 <listbox model="@load(vm.departments)" selectedItem="@bind(emp.department)"
+								 width="200px" mold="select" rows="1"
+								 id="departmentsList">
+								<template name="model" var="item">
+									<listitem>
+										<listcell label="@load(item.name)"/>
+									</listitem>
+								</template>
+						</listbox>
+					</cell>
+				</row>
+			</rows>
+		</grid>
+	</vlayout>
+	<vlayout>
+		<hlayout>
+			<button label="Update" onClick="@command('update')" visible="@load(vm.employee.id ne null)"/>
+			<button label="Delete" onClick="@command('delete')" visible="@load(vm.employee.id ne null)"/>
+			<button label="Add" onClick="@command('add')" visible="@load(vm.employee.id eq null)"/>
+		</hlayout>
+	</vlayout>
+</vlayout>
+</window>
+</zk>

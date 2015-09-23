@@ -1,0 +1,33 @@
+<?page title="Employee Maintenance" ?>
+<zk>
+<window id="employeesPage" border="none" width="100%" apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('vm') @init('net.learntechnology.empmaint.viewmodel.EmployeesVM')">
+	<panel width="99%" border="normal"  height="350px">
+		<caption label="Employees (click to edit/view)" style="text-align: left;">
+			 <button label="Create New" onClick="@command('createEmployee')" style="font-size:12px;" />
+		</caption>
+		<panelchildren>
+			<vlayout style="margin:10px;">
+				<listbox id="employeesList" model="@load(vm.employees)"
+						 selectedItem="@bind(vm.employee)"
+						 width="99%" rows="8">
+ 					<listhead>
+						<listheader label="First" align="left"   width="130px"  sort="auto(firstName)" />
+						<listheader label="Last" align="left"   width="130px"  sort="auto(lastName)" />
+						<listheader label="Age" align="left" width="130px"  sort="auto(age)" />
+						<listheader label="Department" align="left"  width="160px"  sort="auto(department.name)" />
+					</listhead>
+					<template name="model" var="item">
+						<listitem onClick="@command('editEmployee')">
+							<listcell label="@load(item.firstName)"/>
+							<listcell label="@load(item.lastName)"/>
+							<listcell label="@load(item.age)"/>
+							<listcell label="@load(item.department.name)"/>
+						</listitem>
+					</template>
+				</listbox>
+			</vlayout>
+		</panelchildren>
+	</panel>
+</window>
+</zk>
